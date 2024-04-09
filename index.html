@@ -1,39 +1,27 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <title>LA TV Shows | Home</title>
-    <meta name="description" content="A Catalog of Shows Set in Los Angeles">
+    <title>Popular Restaurants | Home</title>
+    <meta name="description" content="A Catalog of Popular Restaurants">
     <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdLTW0fRFrczFY8GUOO3Z5KnmnvLv18g&libraries=places"></script>
+    <script type="text/javascript" src="scripts.js" defer></script>
 </head>
-
 <body>
     <header class="main-header">
-        <h1 class="title">LA TV Shows</h1>
+        <h1 class="title">Popular Restaurants</h1>
     </header>
-    <div id="card-container">
-        
+    <div class="search-container">
+        <input type="text" id="city-input" placeholder="Enter city">
+        <input type="text" id="state-input" placeholder="Enter state">
+        <input type="text" id="country-input" placeholder="Enter country">
+        <input type="text" id="zip-code-input" placeholder="Enter zip code (optional)">
+        <button onclick="fetchRestaurants()">Search</button>
     </div>
-    <div class="card" style="display: none;">
-        <div class="card-content">
-            <h2>TV Show Title</h2>
-            <img src="" alt="TV Show Poster">
-            <ul>
-                <li>Bullet Point 1</li>
-                <li>Bullet Point 2</li>
-                <li>Bullet Point 3</li>
-            </ul>
-        </div>
-    </div>
-    <div class="footer">
-        <button onclick="quoteAlert();">
-            Get A Quote!
-        </button>
-        <button onclick="removeLastCard();">
-            Remove A Card!
-        </button>
+    <div id="card-container"></div>
+    <div id="navigation-buttons">
+        <button onclick="previousRestaurant()">Previous</button>
+        <button onclick="nextRestaurant()">Next</button>
     </div>
 </body>
-
 </html>
