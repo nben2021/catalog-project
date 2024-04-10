@@ -1,27 +1,41 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Popular Restaurants | Home</title>
-    <meta name="description" content="A Catalog of Popular Restaurants">
+  <head>
+    <title>Most Reviewed Restaurants</title>
+    <meta name="description" content="A Catalog of Popular Restaurants" />
     <link rel="stylesheet" href="style.css" />
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUdLTW0fRFrczFY8GUOO3Z5KnmnvLv18g&libraries=places"></script>
-    <script type="text/javascript" src="scripts.js" defer></script>
-</head>
-<body>
-    <header class="main-header">
-        <h1 class="title">Popular Restaurants</h1>
-    </header>
+    <script src="scripts.js" defer></script>
+  </head>
+  <body>
+    <header class="main-header"></header>
     <div class="search-container">
-        <input type="text" id="city-input" placeholder="Enter city">
-        <input type="text" id="state-input" placeholder="Enter state">
-        <input type="text" id="country-input" placeholder="Enter country">
-        <input type="text" id="zip-code-input" placeholder="Enter zip code (optional)">
+      <h1 class="title">Most Reviewed Restaurants</h1>
+      <div class="input-container">
+        <input type="text" id="city-input" placeholder="Enter city" />
+        <input type="text" id="state-input" placeholder="Enter state" />
+        <input type="text" id="zip-code-input" placeholder="Enter zip code" />
+
+    
+        <div>
+          <label for="sort-by">Sort By Ratings Or Reviews:</label>
+          <select name="sort-by" id="sort-category">
+            <option value="stars">Best Rating</option>
+            <option value="review_count">Reviews</option>
+          </select> 
+        </div>
+        <div>
+          <label for="sort-direction">Order:</label>
+          <select name="order" id="sort-direction">
+              <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+          </select>
+        </div>
         <button onclick="fetchRestaurants()">Search</button>
+      </div>
     </div>
     <div id="card-container"></div>
     <div id="navigation-buttons">
-        <button onclick="previousRestaurant()">Previous</button>
-        <button onclick="nextRestaurant()">Next</button>
+      <button onclick="previousRestaurant()">Previous</button>
+      <button onclick="nextRestaurant()">Next</button>
     </div>
-</body>
-</html>
+  </html>

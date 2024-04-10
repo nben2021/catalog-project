@@ -1,100 +1,111 @@
-let currentIndex = 0;
-let sortedRestaurants = [];
+document.addEventListener('DOMContentLoaded', () => {
+    fetchAllData()
+})
+
+let restaurants = []
+let categories = new Set()
+
+function fetchAllData() {
+    const jsonFilePath = 'la_businesses2.json'
+
+    fetch(jsonFilePath)
+        .then((res) => res.json())
+        .then((data) => {
+            restaurants = data
+            data.forEach((restaurant) => {
+                if (restaurant.categories) {
+                    const restaurantCategories =
+                        restaurant.categories.split(',')
+                    categories.add(...restaurantCategories)
+                }
+            })
+            console.log(categories)
+        })
+        .catch((error) => {
+            console.error('Error loading data:', error)
+        })
+}
 
 function fetchRestaurants() {
-    const city = document.getElementById("city-input").value;
-    const state = document.getElementById("state-input").value;
-    const country = document.getElementById("country-input").value;
-    const zipCode = document.getElementById("zip-code-input").value;
-    let locationQuery = `${city}${state ? ', ' + state : ''}${zipCode ? ', ' + zipCode : ''}, ${country}`;
+    const city = document.getElementById('city-input')?.value.toLowerCase()
+    const state = document.getElementById('state-input')?.value.toLowerCase()
+    const zipCode = document
+        .getElementById('zip-code-input')
+        ?.value.toLowerCase()
+    const sortDirection = document
+        .getElementById('sort-direction')
+        ?.value.toLowerCase()
+    const sortCategory = document
+        .getElementById('sort-category')
+        ?.value.toLowerCase()
 
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ 'address': locationQuery }, (results, status) => {
-        if (status === google.maps.GeocoderStatus.OK) {
-            const location = results[0].geometry.location;
-            const service = new google.maps.places.PlacesService(document.createElement('div'));
-            const request = {
-                location: location,
-                radius: '80000',
-                type: 'restaurant',
-                keyword: 'food'
-            };
+    console.log(
+        `city: ${city}, state: ${state}, zipCode: ${zipCode} sortDirection: ${sortDirection} sortCategory: ${sortCategory}`
+    )
 
-            service.nearbySearch(request, (results, status) => {
-                if (status === google.maps.places.PlacesServiceStatus.OK) {
-                    const popularFoodPlaces = results.filter(place => place.rating > 4 && place.user_ratings_total > 500);
-                    sortedRestaurants = popularFoodPlaces.sort((a, b) => b.user_ratings_total - a.user_ratings_total || b.rating - a.rating);
-                    currentIndex = 0;
-                    displayRestaurants();
-                } else {
-                    console.error('Google Places API error:', status);
-                }
-            });
-        } else {
-            console.error('Geocoder error:', status);
+    let filteredRestaurants = []
+    for (let i = 0; i < restaurants.length; i++) {
+        let valid = true
+        if (city !== '' && restaurants[i]?.city.toLowerCase() != city) {
+            valid = false
         }
-    });
-}
 
-function displayRestaurants() {
-    const cardContainer = document.getElementById("card-container");
-    cardContainer.innerHTML = "";
+        if (state !== '' && restaurants[i].state.toLowerCase() != state) {
+            valid = false
+        }
 
-    const startIndex = currentIndex * 4;
-    const endIndex = Math.min(startIndex + 4, sortedRestaurants.length);
+        if (zipCode !== '' && restaurants[i].zipCode != zipCode) {
+            valid = false
+        }
 
-    for (let i = startIndex; i < endIndex; i++) {
-        const restaurant = sortedRestaurants[i];
-        const photoUrl = restaurant.photos && restaurant.photos.length > 0 ? restaurant.photos[0].getUrl() : 'default-image-url.jpg';
-
-        const card = document.createElement("div");
-        card.className = "card";
-        card.innerHTML = `
-            <div class="card-content">
-                <h2>${restaurant.name}</h2>
-                <img src="${photoUrl}" alt="${restaurant.name} Photo">
-                <p>Rating: ${restaurant.rating} (${restaurant.user_ratings_total} reviews)</p>
-                <button class="view-more-button" onclick="toggleDetails(this)">View More</button>
-                <div class="restaurant-details" style="display: none;">
-                    <p>Address: ${restaurant.vicinity || 'Address not available'}</p>
-                </div>
-            </div>
-        `;
-        cardContainer.appendChild(card);
+        if (valid) {
+            filteredRestaurants.push(restaurants[i])
+        }
     }
-}
 
-function toggleDetails(button) {
-    const details = button.nextElementSibling;
-    if (details.style.display === 'none') {
-        details.style.display = 'block';
-        button.textContent = 'View Less';
+    let sortedArr = []
+    if (sortDirection === 'asc') {
+        filteredRestaurants.sort((a, b) => {
+            return a[sortCategory] - b[sortCategory]
+        })
     } else {
-        details.style.display = 'none';
-        button.textContent = 'View More';
+        filteredRestaurants.sort((a, b) => {
+            return b[sortCategory] - a[sortCategory]
+        })
     }
+
+    console.log(filteredRestaurants)
+    displayRestaurants(filteredRestaurants)
 }
 
-function previousRestaurant() {
-    if (currentIndex > 0) {
-        currentIndex--;
-        displayRestaurants();
-    }
+function displayRestaurants(filteredRestaurants) {
+    const cardContainer = document.getElementById('card-container')
+    cardContainer.innerHTML = ''
+
+    filteredRestaurants.forEach((restaurant) => {
+        const card = document.createElement('div')
+        card.className = 'card'
+
+        let starsHTML = ''
+        for (let i = 0; i < 5; i++) {
+            if (i < restaurant.stars) {
+                starsHTML += '<span class="star filled">&#9733;</span>' 
+            } else {
+                starsHTML += '<span class="star">&#9734;</span>' 
+            }
+        }
+
+        card.innerHTML = `
+              <div class="card-content">
+                  <h2>${restaurant.name}</h2>
+                  <div class="stars">${starsHTML}</div>
+                  <p class="review-count">${restaurant.review_count} Reviews</p>
+                  <p>Address: ${restaurant.address}, ${restaurant.city}, ${restaurant.state}, ${restaurant.postal_code}, ${restaurant.review_count} Reviews</p>
+              </div>
+          `
+        cardContainer.appendChild(card)
+    })
 }
-
-function nextRestaurant() {
-    const maxIndex = Math.ceil(sortedRestaurants.length / 4) - 1;
-    if (currentIndex < maxIndex) {
-        currentIndex++;
-        displayRestaurants();
-    }
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const cardContainer = document.getElementById("card-container");
-    if (!cardContainer) {
-        console.error("Card container not found");
-    }
-});
-
-
+document
+    .getElementById('search-button')
+    .addEventListener('click', fetchRestaurants)

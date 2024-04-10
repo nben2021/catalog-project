@@ -1,101 +1,215 @@
-body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-image: url(https://media.istockphoto.com/id/941410646/vector/chinese-traditional-food-line-seamless-pattern.jpg?s=612x612&w=0&k=20&c=E-AKcow5ZlKAd5MazL7y7MmkodFM0ltMFEzx__0DWbQ=);
 }
 
 .main-header {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
+  background-image: url(https://img.goodfon.com/wallpaper/big/1/47/tekstura-yaponskaya-kuhnya-sushi.jpg);
+  height: 100px;
+  -moz-box-shadow: 0 0 3px #000000;
+  -webkit-box-shadow: 0 0 3px #000000;
+  box-shadow: 0 0 10px #000000;
 }
 
 .search-container {
-    text-align: center;
-    margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 30px auto;
+  width: 80%;
+  max-width: 800px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: #e33434;
+  overflow: hidden;
+  border: 1px black solid;
 }
 
-.search-container input[type=text], .search-container button {
-    padding: 10px;
-    margin-right: 10px;
-    width: 200px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.title {
+  height: 60px; 
+  line-height: 60px; 
+  font-size: 40px;
+  color: white;
+  margin: 20px;
+  padding: 0 10px; 
+  background-color: #e33434;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-shadow: 2px 2px;
 }
 
-.search-container button {
-    background-color: #4CAF50;
-    color: white;
-    cursor: pointer;
-    width: auto;
+.input-container {
+  border-top: 1px black solid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 10px;
 }
 
-.search-container button:hover {
-    background-color: #45a049;
+.input-container input[type="text"],
+.input-container select,
+.input-container button {
+  flex: 1 1 180px; 
+
+  padding: 10px;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-right: 1px solid #ccc;
+}
+
+select {
+  height: 3em;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  padding: 10px;
+  margin: 5px;
+  border-right: 1px solid #ccc;
+}
+
+.input-container input[type="text"]:last-child {
+  border-right: none; 
+}
+.input-container select:last-child {
+  border-right: none; 
+}
+
+.input-container button {
+  width: 85%;
+  background-color: #e33434;
+  color: white;
+  cursor: pointer;
+  border-right: none; 
+  font-size: 35px;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-shadow: 2px 2px;
+  border-left: 1px solid black;
+}
+.input-container button:active {
+  transform: scale(1.1);
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+}
+
+.input-container button:hover {
+  background-color: #c90303;
 }
 
 #card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.card-content h2 {
+  background-color: #e33434; 
+  color: white;
+  margin: 0; 
+  padding: 10px; 
+  border-bottom: 1px solid black; 
+  border-radius: 5px 5px 0px 0px;
+  border: 1px black solid;
+  width: 240px;
 }
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    transition: 0.3s;
-    width: 300px;
-    height: 450px;
-    border-radius: 5px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  background-color: white;
+  width: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: #e33434;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: black;
+  text-shadow: 2px 2px;
+  border: 1px black solid;
 }
 
 .card img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0px 0px 5px 5px;
+  border: 1px black solid;
+  border-top: none;
 }
 
 .card-content {
-    padding: 20px;
-    flex-grow: 1;
+  padding: 20px;
+  flex-grow: 1;
 }
 
 .view-more-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background-color 0.3s;
+  background-color: #e33434;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
 .view-more-button:hover {
-    background-color: #45a049;
+  background-color: #c90303;
 }
 
 #navigation-buttons {
-    text-align: center;
-    margin-top: 20px;
+  text-align: center;
+  margin-top: 20px;
 }
 
 #navigation-buttons button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 0 10px;
-    transition: background-color 0.3s;
+  background-color: #e33434;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px;
+  transition: background-color 0.3s;
+  border: 1px black solid;
 }
 
 #navigation-buttons button:hover {
-    background-color: #45a049;
+  background-color: #c90303;
+}
+
+@media screen and (max-width: 600px) {
+  .input-container {
+    margin-top: 60px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+}
+.star {
+  margin-top: 10px;
+  color: orange;
+  font-size: 20px;
+}
+
+.filled {
+  color: orange; 
+}
+.review-count {
+  color: #0000FF; 
+  font-size: 16px;
+  margin-top: 5px; 
+  margin-bottom: -5px; 
+  font-weight: bold; 
+  text-shadow: 1px 1px #000; 
 }
